@@ -1,209 +1,836 @@
-# Takto: your AI companion
+# 🤖 TakTo AI — Your Personal AI Companion
 
-A full-stack AI companion: part friend, part mentor, part brainstorming partner. It talks naturally, helps you think through decisions, teaches, debugs code, brainstorms, and **remembers useful things about you** (with you in full control of what is stored).
+<p align="center">
+  <strong>Think better. Learn faster. Build smarter.</strong>
+</p>
 
-> Don't just answer the user. Understand them, help them think, and help them move forward.
+<p align="center">
+  A full-stack AI companion that acts as your <strong>friend, mentor, study partner, coding assistant, and brainstorming partner</strong>.
+</p>
 
-## Features
+<p align="center">
 
-- **7 modes**: Friend, Mentor, Study, Coding, Idea, Fun, Think. Each changes the AI's system prompt. Think mode follows *what I understand → options with pros/cons → my take → next step*.
-- **Streaming replies** (tokens appear as they're generated), with a Stop button.
-- Markdown + code blocks with a Copy button, timestamps, typing indicator, auto-scroll.
-- Regenerate, retry on error, edit a message (re-runs from there), delete a message, clear a conversation.
-- Conversations: create, rename, delete, search (titles and message text), reopen, continue. Smart one-time AI titles.
-- Follow-up suggestion chips after replies (one click sends them).
-- Fun corner: random question, would-you-rather, mini quiz, riddle, brain teaser, joke, coding challenge, motivation challenge. All AI-powered.
-- **Long-term memory**: only durable, useful facts are saved (never passwords, keys, financial details). View, delete, or clear everything on the Profile page.
-- Accounts: register, login, logout, hashed passwords, session cookies. Profile with tone, favorite mode, goals and interests.
-- Light/dark theme, responsive layout (sidebar becomes a drawer on mobile), keyboard accessible, ARIA labels, visible focus.
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge\&logo=python\&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-Backend-000000?style=for-the-badge\&logo=flask\&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge\&logo=sqlite\&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-AI-F55036?style=for-the-badge)
+![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?style=for-the-badge\&logo=javascript\&logoColor=black)
 
-## Architecture
+</p>
+
+<p align="center">
+
+<a href="#-features">Features</a> • <a href="#-architecture">Architecture</a> • <a href="#-installation">Installation</a> • <a href="#-usage">Usage</a> • <a href="#-api">API</a> • <a href="#-security">Security</a>
+
+</p>
+
+---
+
+## 🧠 What is TakTo AI?
+
+**TakTo AI** is a full-stack personal AI companion designed to do more than simply answer questions.
+
+It understands the user's context, helps with decision-making, teaches concepts, assists with programming, generates ideas, and remembers useful long-term information — while keeping the user in control of stored memories.
+
+> **"Don't just answer the user. Understand them, help them think, and help them move forward."**
+
+---
+
+## ✨ Why TakTo AI?
+
+Most AI chat applications focus only on generating responses.
+
+TakTo AI focuses on **continuous interaction**.
 
 ```text
-Browser (HTML/CSS/vanilla JS)
-   │  fetch /api/*  (JSON, plus streamed events for chat)
-   ▼
-Flask app (backend/app.py)  ── serves the frontend too
-   ├─ routes/      thin HTTP layer: validation + JSON
-   ├─ services/    all SQL lives here (users, conversations, memories)
-   ├─ ai/          groq_client (only file that calls Groq), prompts, personality, memory
-   └─ database.py  SQLite connection + schema (swap this layer to move to MongoDB later)
+             ┌───────────────────────┐
+             │       👤 USER         │
+             └───────────┬───────────┘
+                         │
+                         ▼
+             ┌───────────────────────┐
+             │      🤖 TakTo AI      │
+             │                       │
+             │  Understand Context   │
+             │  Select AI Mode       │
+             │  Retrieve Memories    │
+             │  Generate Response    │
+             └───────────┬───────────┘
+                         │
+                         ▼
+             ┌───────────────────────┐
+             │   💬 Useful Response  │
+             └───────────────────────┘
 ```
 
-Per chat message: save user message → load recent messages (capped) → pick the few most relevant memories → add profile + mode → build the system prompt → stream from Groq → save the reply → (once per chat) generate a title → (only when the message looks personal) extract a memory in the background. That is at most 1 to 3 Groq calls, usually 1.
+---
 
-## Tech stack
+# 🚀 Features
 
-Python 3.10+, Flask, Flask-CORS, python-dotenv, Werkzeug, Groq official SDK, SQLite, vanilla JS, no frontend build step.
+## 🎭 7 AI Modes
 
-## Folder structure
+Choose how TakTo should interact with you.
+
+| Mode                | Purpose                                            |
+| ------------------- | -------------------------------------------------- |
+| 🧑‍🤝‍🧑 **Friend** | Casual conversations and support                   |
+| 🧭 **Mentor**       | Guidance and decision-making                       |
+| 📚 **Study**        | Learn concepts with simple explanations            |
+| 💻 **Coding**       | Debugging and programming assistance               |
+| 💡 **Idea**         | Brainstorming and creative thinking                |
+| 🎮 **Fun**          | Games, jokes and entertainment                     |
+| 🧠 **Think**        | Structured reasoning with pros/cons and next steps |
+
+### Think Mode
+
+Think mode follows:
+
+```text
+What I understand
+        ↓
+Available options
+        ↓
+Pros & Cons
+        ↓
+My take
+        ↓
+Next step
+```
+
+---
+
+## ⚡ Real-Time Streaming
+
+AI responses are streamed as they are generated.
+
+```text
+AI is thinking...
+
+Hello 👋
+        ↓
+Hello! 👋 How
+        ↓
+Hello! 👋 How are
+        ↓
+Hello! 👋 How are you?
+```
+
+Includes:
+
+* ⚡ Streaming responses
+* ⏹️ Stop generation
+* 🔄 Regenerate
+* 🔁 Retry on errors
+* ✏️ Edit messages
+* 🗑️ Delete messages
+* 📋 Copy code
+* ⏱️ Message timestamps
+* ⌨️ Typing indicator
+* 📜 Automatic scrolling
+
+---
+
+# 🧠 Long-Term Memory
+
+TakTo can remember **useful information about the user**.
+
+For example:
+
+```text
+User:
+"I'm learning Python for Data Science."
+
+        ↓
+
+TakTo AI
+
+        ↓
+
+Memory:
+Learning → Python
+Interest → Data Science
+```
+
+The user remains in control.
+
+### Memory controls
+
+* 👁️ View memories
+* 🗑️ Delete individual memories
+* 🧹 Clear all memories
+* 🔐 Sensitive information is not intentionally stored
+
+Passwords, API keys, tokens and financial information are excluded from memory extraction.
+
+---
+
+# 💬 Conversation Management
+
+TakTo AI provides a complete conversation system.
+
+### Supported operations
+
+```text
+Create conversation
+        ↓
+Chat
+        ↓
+Rename
+        ↓
+Search
+        ↓
+Edit
+        ↓
+Regenerate
+        ↓
+Delete / Clear
+```
+
+Features include:
+
+* Create conversations
+* Rename conversations
+* Search conversations
+* Reopen previous conversations
+* Continue conversations
+* Delete conversations
+* Clear messages
+* Edit previous messages
+* Regenerate AI responses
+* Smart AI-generated titles
+
+---
+
+# 🎮 Fun Corner
+
+Need a break?
+
+TakTo AI includes an AI-powered entertainment section.
+
+```text
+🎲 Random Question
+🤔 Would You Rather
+🧩 Mini Quiz
+🧠 Riddle
+💡 Brain Teaser
+😂 Joke
+💻 Coding Challenge
+🔥 Motivation Challenge
+```
+
+---
+
+# 👤 Personal Profile
+
+Users can customize their AI experience.
+
+```text
+Name
+Email
+        │
+        ├── Tone
+        ├── Favorite Mode
+        ├── Learning Goals
+        └── Interests
+```
+
+---
+
+# 🎨 Modern UI
+
+TakTo AI supports:
+
+* 🌙 Dark mode
+* ☀️ Light mode
+* 📱 Responsive design
+* 📂 Mobile sidebar drawer
+* ⌨️ Keyboard accessibility
+* ♿ ARIA labels
+* 🎯 Visible focus states
+* 💻 Desktop-friendly chat interface
+
+---
+
+# 🏗️ Architecture
+
+```text
+                         👤 USER
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │       FRONTEND          │
+              │                         │
+              │ HTML + CSS + Vanilla JS │
+              └────────────┬────────────┘
+                           │
+                           │ REST API
+                           │ + Streaming
+                           ▼
+              ┌─────────────────────────┐
+              │       FLASK APP         │
+              │      backend/app.py     │
+              └────────────┬────────────┘
+                           │
+          ┌────────────────┼────────────────┐
+          │                │                │
+          ▼                ▼                ▼
+     ┌─────────┐     ┌───────────┐    ┌──────────┐
+     │ Routes  │     │ AI Layer  │    │ Services │
+     │         │     │           │    │          │
+     │ Auth    │     │ Groq      │    │ Users    │
+     │ Chat    │     │ Prompts   │    │ Chat     │
+     │ Profile │     │ Memory    │    │ Memory   │
+     └─────────┘     └─────┬─────┘    └────┬─────┘
+                           │               │
+                           ▼               ▼
+                     ┌────────────────────────┐
+                     │        SQLite           │
+                     │                          │
+                     │ Users                    │
+                     │ Conversations           │
+                     │ Messages                │
+                     │ Memories                │
+                     └────────────────────────┘
+```
+
+---
+
+# 🔄 AI Chat Pipeline
+
+Every message follows this pipeline:
+
+```text
+User Message
+     │
+     ▼
+Save Message
+     │
+     ▼
+Load Recent Messages
+     │
+     ▼
+Retrieve Relevant Memories
+     │
+     ▼
+Load User Profile
+     │
+     ▼
+Select AI Mode
+     │
+     ▼
+Build System Prompt
+     │
+     ▼
+Groq AI
+     │
+     ▼
+Stream Response
+     │
+     ▼
+Save Assistant Response
+     │
+     ├──────────────► Generate Title
+     │
+     └──────────────► Extract Useful Memory
+```
+
+Usually this requires **1 AI call**, with additional calls only when title generation or memory extraction is required.
+
+---
+
+# 🛠️ Tech Stack
+
+### Backend
+
+* 🐍 Python 3.10+
+* 🌶️ Flask
+* 🔀 Flask-CORS
+* 🔐 Werkzeug
+* 📦 python-dotenv
+* 🤖 Groq SDK
+
+### Database
+
+* 🗄️ SQLite
+
+### Frontend
+
+* HTML5
+* CSS3
+* Vanilla JavaScript
+* Responsive CSS
+
+### AI
+
+* Groq API
+* Configurable Groq model
+* Streaming responses
+* Prompt-based personality system
+* Context-aware memory
+
+---
+
+# 📁 Project Structure
 
 ```text
 my-ai-companion/
+│
 ├── backend/
-│   ├── app.py  config.py  database.py  utils.py  requirements.txt
-│   ├── ai/        groq_client.py  personality.py  memory.py  prompts.py
-│   ├── routes/    auth.py  chat.py  conversations.py  memory.py  profile.py
-│   ├── services/  conversation_service.py  memory_service.py  user_service.py
-│   └── tests/     smoke_test.py
+│   ├── app.py
+│   ├── config.py
+│   ├── database.py
+│   ├── utils.py
+│   ├── requirements.txt
+│   │
+│   ├── ai/
+│   │   ├── groq_client.py
+│   │   ├── personality.py
+│   │   ├── memory.py
+│   │   └── prompts.py
+│   │
+│   ├── routes/
+│   │   ├── auth.py
+│   │   ├── chat.py
+│   │   ├── conversations.py
+│   │   ├── memory.py
+│   │   └── profile.py
+│   │
+│   ├── services/
+│   │   ├── conversation_service.py
+│   │   ├── memory_service.py
+│   │   └── user_service.py
+│   │
+│   └── tests/
+│       └── smoke_test.py
+│
 ├── frontend/
-│   ├── index.html  login.html  register.html  chat.html  profile.html
-│   ├── img/   takto.svg  clouds.svg
-│   ├── css/  style.css  chat.css  responsive.css
-│   └── js/   api.js  app.js  home.js  auth.js  chat.js  profile.js  markdown.js
-├── database/      companion.db is created here on first run
-├── .env.example  .gitignore  README.md
+│   ├── index.html
+│   ├── login.html
+│   ├── register.html
+│   ├── chat.html
+│   ├── profile.html
+│   │
+│   ├── img/
+│   ├── css/
+│   └── js/
+│
+├── database/
+│   └── companion.db
+│
+├── .env.example
+├── .gitignore
+└── README.md
 ```
 
-## Installation
+---
+
+# ⚙️ Installation
+
+## 1️⃣ Clone the repository
 
 ```bash
-cd my-ai-companion
+git clone https://github.com/mathesh08012007-spec/TakTo-AI.git
+cd TakTo-AI
+```
+
+---
+
+## 2️⃣ Create virtual environment
+
+### Windows
+
+```powershell
 python -m venv .venv
-```
-
-Activate it:
-
-```bash
-# macOS / Linux
-source .venv/bin/activate
-# Windows (PowerShell)
 .venv\Scripts\activate
 ```
 
-Install:
+### macOS / Linux
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+---
+
+## 3️⃣ Install dependencies
 
 ```bash
 pip install -r backend/requirements.txt
 ```
 
-## Environment setup and Groq configuration
+---
 
-1. Create a free key at <https://console.groq.com/keys>.
-2. Copy the example file and edit it:
+# 🔑 Configure Groq
 
-```bash
-cp .env.example .env          # Windows: copy .env.example .env
+Create a Groq API key from the Groq Console.
+
+Copy:
+
+```text
+.env.example
 ```
 
-3. Fill in `.env`:
+to:
 
-```ini
-GROQ_API_KEY=gsk_your_real_key
-SECRET_KEY=paste-a-long-random-string
+```text
+.env
+```
+
+### Windows
+
+```powershell
+copy .env.example .env
+```
+
+### macOS / Linux
+
+```bash
+cp .env.example .env
+```
+
+Configure:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+
+SECRET_KEY=your_random_secret_key
+
 DATABASE_PATH=database/companion.db
+
 GROQ_MODEL=openai/gpt-oss-120b
 ```
 
-Generate a secret key with: `python -c "import secrets; print(secrets.token_hex(32))"`
+Generate a secure secret key:
 
-**Model:** `GROQ_MODEL` is configurable on purpose. Groq retires models regularly (the older Llama 3.x models have been deprecated). Check <https://console.groq.com/docs/models> and the deprecations page, then change the value. For `gpt-oss` models, `GROQ_REASONING_EFFORT` (`low`, `medium`, `high`) controls speed vs depth; it is ignored for other models.
-
-The key is read only on the server. It never appears in any HTML, CSS or JS file, and `.env` is in `.gitignore`.
-
-## Database setup
-
-Nothing to do. Tables (`users`, `user_preferences`, `conversations`, `messages`, `memories`) are created automatically on startup, with foreign keys and indexes.
-
-```sql
-users(user_id PK, name, email UNIQUE, password_hash, created_at)
-user_preferences(user_id PK/FK, tone, favorite_mode, learning_goals, interests, updated_at)
-conversations(conversation_id PK, user_id FK, title, mode, title_generated, created_at, updated_at)
-messages(message_id PK, conversation_id FK, role['user'|'assistant'|'system'], content, created_at)
-memories(memory_id PK, user_id FK, memory_text, category, importance, created_at, updated_at)
-  category: preference | goal | interest | learning | project | personal_context
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-Deleting a user or conversation cascades to its rows.
+> ⚠️ Never commit `.env` or your Groq API key to GitHub.
 
-## Running locally
+---
+
+# ▶️ Run the Application
+
+Start the Flask server:
 
 ```bash
 python backend/app.py
 ```
 
-Open <http://localhost:5000>. Flask serves both the API and the frontend, so there is nothing else to start.
+Then open:
 
-Optional: if you prefer to serve `frontend/` from another static server (e.g. VS Code Live Server on port 5500), add that origin to `CORS_ORIGINS` in `.env` and set `window.APP_CONFIG = { apiBase: "http://localhost:5000/api" }` in a script tag before `js/api.js`. Using the single Flask server is simpler and recommended.
+```text
+http://localhost:5000
+```
 
-## How to test
+That's it.
 
-Automated, offline (no API key needed; Groq calls are replaced with stand-ins, everything else is real):
+The Flask backend serves both the API and frontend.
+
+---
+
+# 🧪 Testing
+
+Run the automated offline smoke test:
 
 ```bash
 python backend/tests/smoke_test.py
 ```
 
-It checks registration/login validation, streaming, suggestion parsing, title generation, memory saving, regenerate/edit/delete, search, per-user isolation, and error handling.
+The tests cover:
 
-Manual with a real key:
+```text
+Registration
+     ↓
+Login
+     ↓
+Streaming
+     ↓
+Suggestions
+     ↓
+Memory
+     ↓
+Conversation Management
+     ↓
+Edit / Delete
+     ↓
+Search
+     ↓
+User Isolation
+     ↓
+Error Handling
+```
 
-1. Register, then use a quick action on the home page. Confirm it opens chat in that mode.
-2. Send "Bro I don't feel like studying." and check the tone is casual.
-3. Switch to **Think** and send "I'm confused whether I should choose AI or web development."
-4. Say "I'm learning Python for data science and I prefer simple explanations." A moment later, open Profile → "What I remember about you".
-5. Refresh the page, open the chat from the sidebar, and try rename, search, edit, regenerate, delete.
-6. Resize the window below 860px to see the sidebar become a drawer.
+---
 
-## API endpoints
+# 🔌 API
 
-All responses are `{"success": true, "data": {...}}` or `{"success": false, "error": "message"}`.
+All API responses follow:
 
-| Method | Path | Notes |
-|---|---|---|
-| POST | `/api/auth/register` | name, email, password, confirm_password |
-| POST | `/api/auth/login` | email, password |
-| POST | `/api/auth/logout` | |
-| GET | `/api/auth/me` | current user |
-| POST | `/api/chat` | `{message, conversation_id?, mode?}`; streams server-sent events: `meta`, `delta`, `done`, `title`, `error` |
-| POST | `/api/chat/regenerate` | `{conversation_id}`; also used for Retry |
-| GET / POST | `/api/conversations` | list (`?q=` searches) / create |
-| GET / PUT / DELETE | `/api/conversations/<id>` | open (with messages) / rename or change mode / delete |
-| POST | `/api/conversations/<id>/clear` | delete all messages |
-| PUT / DELETE | `/api/conversations/<id>/messages/<mid>` | edit a user message (drops later messages) / delete |
-| GET / DELETE | `/api/memories` | list / clear all |
-| DELETE | `/api/memories/<id>` | delete one |
-| GET / PUT | `/api/profile` | read / update |
-| GET | `/api/health` | status and whether a Groq key is configured |
+```json
+{
+  "success": true,
+  "data": {}
+}
+```
 
-## Security notes
+or:
 
-- Passwords hashed with Werkzeug (`scrypt` by default). Never stored in plaintext.
-- HTTP-only, SameSite=Lax session cookies; set `COOKIE_SECURE=1` behind HTTPS.
-- All SQL is parameterized; user input is validated (lengths, email, modes, tones); request bodies are capped at 256 KB; messages at 8000 characters.
-- Every conversation, message and memory query is scoped to the logged-in user.
-- Markdown is escaped before rendering, and only `http(s)` links are allowed.
-- In-memory rate limits on login, registration and chat. They are per process, so use Redis or a reverse proxy for multi-worker deployments.
-- Groq errors are translated into friendly messages. Tracebacks and raw API errors are logged server-side only.
-- Memory extraction skips anything resembling passwords, keys, tokens, card numbers or other secrets.
+```json
+{
+  "success": false,
+  "error": "message"
+}
+```
 
-## Deployment
+### Authentication
 
-1. Set a strong `SECRET_KEY`, your real `GROQ_API_KEY`, `COOKIE_SECURE=1`, and `CORS_ORIGINS` to your domain.
-2. Use a production server instead of Flask's dev server. On Linux:
+| Method | Endpoint             | Description   |
+| ------ | -------------------- | ------------- |
+| POST   | `/api/auth/register` | Register user |
+| POST   | `/api/auth/login`    | Login         |
+| POST   | `/api/auth/logout`   | Logout        |
+| GET    | `/api/auth/me`       | Current user  |
+
+### Chat
+
+| Method | Endpoint               | Description         |
+| ------ | ---------------------- | ------------------- |
+| POST   | `/api/chat`            | Send message        |
+| POST   | `/api/chat/regenerate` | Regenerate response |
+
+### Conversations
+
+| Method | Endpoint                       | Description               |
+| ------ | ------------------------------ | ------------------------- |
+| GET    | `/api/conversations`           | List/search conversations |
+| POST   | `/api/conversations`           | Create conversation       |
+| GET    | `/api/conversations/:id`       | Open conversation         |
+| PUT    | `/api/conversations/:id`       | Rename/change mode        |
+| DELETE | `/api/conversations/:id`       | Delete conversation       |
+| POST   | `/api/conversations/:id/clear` | Clear messages            |
+
+### Memory
+
+| Method | Endpoint            | Description    |
+| ------ | ------------------- | -------------- |
+| GET    | `/api/memories`     | List memories  |
+| DELETE | `/api/memories/:id` | Delete memory  |
+| DELETE | `/api/memories`     | Clear memories |
+
+### Profile
+
+| Method | Endpoint       |
+| ------ | -------------- |
+| GET    | `/api/profile` |
+| PUT    | `/api/profile` |
+
+### Health
+
+```text
+GET /api/health
+```
+
+---
+
+# 🔐 Security
+
+TakTo AI includes several security protections.
+
+### Authentication
+
+* Passwords hashed using Werkzeug
+* HTTP-only session cookies
+* SameSite cookie protection
+* Secure cookies supported behind HTTPS
+
+### API Security
+
+* Parameterized SQL queries
+* Input validation
+* Request-size limits
+* Message-size limits
+* Per-user data isolation
+* Rate limiting
+
+### AI Security
+
+Sensitive information is intentionally excluded from memory extraction, including:
+
+```text
+❌ Passwords
+❌ API keys
+❌ Tokens
+❌ Card numbers
+❌ Secrets
+```
+
+---
+
+# 🗃️ Database
+
+SQLite is automatically initialized when the application starts.
+
+Main tables:
+
+```text
+users
+   │
+   ├── user_preferences
+   │
+   ├── conversations
+   │       │
+   │       └── messages
+   │
+   └── memories
+```
+
+SQLite can later be replaced with another database by changing the database/service layer.
+
+---
+
+# 🚀 Deployment
+
+For production, use a production WSGI server instead of Flask's development server.
+
+Example:
 
 ```bash
 pip install gunicorn
-gunicorn --chdir backend -w 1 --threads 8 --timeout 120 -b 0.0.0.0:8000 app:app
 ```
 
-Use threads rather than many workers because replies stream, and keep `-w 1` while rate limiting is in memory and SQLite is the database.
+```bash
+gunicorn \
+  --chdir backend \
+  -w 1 \
+  --threads 8 \
+  --timeout 120 \
+  -b 0.0.0.0:8000 \
+  app:app
+```
 
-3. Put Nginx or Caddy in front for HTTPS. For streaming, disable proxy buffering on `/api/chat` (`proxy_buffering off;`).
-4. Back up `database/companion.db`. If you outgrow SQLite, replace `database.py` and the three files in `services/`; routes and AI code don't touch SQL.
+For production:
 
-## Troubleshooting
+```text
+Internet
+    │
+    ▼
+HTTPS / Nginx / Caddy
+    │
+    ▼
+Gunicorn
+    │
+    ▼
+Flask
+    │
+    ├── Groq
+    │
+    └── SQLite
+```
 
-| Problem | Fix |
-|---|---|
-| "The AI key isn't set up yet" | `.env` must be in the project root (next to `.env.example`) with `GROQ_API_KEY` set. Restart the server. |
-| "The AI key looks invalid" | Re-copy the key from console.groq.com. No quotes or spaces. |
-| "The configured AI model isn't available" | Change `GROQ_MODEL` to a model listed at console.groq.com/docs/models. |
-| "I'm getting a lot of requests" | Groq free-tier rate limit. Wait a moment, or upgrade your plan. |
-| Replies appear all at once behind a proxy | Turn off proxy buffering (see Deployment). |
-| Logged out on every restart | `SECRET_KEY` changes between runs. Set a fixed value in `.env`. |
-| `ModuleNotFoundError` | Activate the virtualenv and re-run `pip install -r backend/requirements.txt`. |
-| Port already in use | Set `PORT=5001` in `.env`. |
-| Google Fonts don't load (offline) | The UI falls back to system fonts automatically. |
-#   T a k T o - A I  
- 
+---
+
+# 🐛 Troubleshooting
+
+| Problem                   | Solution                                    |
+| ------------------------- | ------------------------------------------- |
+| AI key not configured     | Check `.env` and restart server             |
+| Invalid AI key            | Generate/copy a new Groq key                |
+| Model unavailable         | Change `GROQ_MODEL`                         |
+| Too many requests         | Wait for rate limit to reset                |
+| Streaming appears delayed | Disable proxy buffering                     |
+| Logged out after restart  | Keep a fixed `SECRET_KEY`                   |
+| Module not found          | Activate `.venv` and reinstall requirements |
+| Port already used         | Change `PORT` in `.env`                     |
+
+---
+
+# 🗺️ Roadmap
+
+Potential future improvements:
+
+```text
+[x] Multi-mode AI
+[x] Streaming responses
+[x] Conversation management
+[x] Long-term memory
+[x] User profiles
+[x] Fun corner
+[x] Responsive UI
+[x] Security validation
+[ ] Voice conversation
+[ ] Speech-to-text
+[ ] Text-to-speech
+[ ] RAG knowledge base
+[ ] File/document chat
+[ ] Multi-model support
+[ ] Redis rate limiting
+[ ] Cloud database
+```
+
+---
+
+# 📊 Project Highlights
+
+```text
+🤖 AI Companion
+        +
+🧠 Long-Term Memory
+        +
+💬 Real-Time Streaming
+        +
+🎭 Multiple Personalities
+        +
+👤 User Profiles
+        +
+🔐 Secure Authentication
+        +
+📱 Responsive Interface
+        =
+🚀 TakTo AI
+```
+
+---
+
+# 👨‍💻 Developer
+
+**Mathesh K**
+
+B.Tech — Artificial Intelligence & Data Science
+
+Interested in:
+
+```text
+Artificial Intelligence
+Machine Learning
+Data Science
+Web Development
+Generative AI
+LLM Applications
+```
+
+---
+
+# ⭐ Support the Project
+
+If you find **TakTo AI** useful:
+
+⭐ Star the repository
+🍴 Fork the project
+🐛 Report issues
+💡 Suggest features
+🔀 Submit pull requests
+
+---
+
+<p align="center">
+
+<strong>Built with Python, Flask, JavaScript, SQLite & Groq AI ❤️</strong>
+
+<br><br>
+
+<em>Think better. Learn faster. Build smarter.</em>
+
+</p>
