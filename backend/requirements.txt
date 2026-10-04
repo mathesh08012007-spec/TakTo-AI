@@ -3,3 +3,4 @@ Flask-CORS>=4.0
 python-dotenv>=1.0
 groq>=0.30
 Werkzeug>=3.0
+gunicorn>=21.0
