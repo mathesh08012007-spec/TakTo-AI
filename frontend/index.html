@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Takto: your AI companion for ideas, problems, and everything in between</title>
+  <meta name="description" content="Talk, think, learn and build with an AI companion that remembers what matters to you.">
+  <link rel="icon" type="image/svg+xml" href="img/takto.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-nav">
+    <a class="brand" href="index.html"><img class="brand-mark" src="img/takto.svg" alt=""><span>Takto</span></a>
+    <nav class="nav-actions" id="nav-actions" aria-label="Account"><button type="button" class="icon-btn" data-theme-toggle aria-label="Switch theme"></button></nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-top"><div class="hero-text"><h1 id="hero-title">Your AI companion for ideas, problems, and everything in between.</h1>
+      <p class="sub">Talk. Think. Learn. Build.</p></div>
+      <img class="hero-mascot" src="img/takto.svg" alt="Takto, a black cat wearing a yellow scarf"></div>
+
+      <nav class="tiles" aria-label="Start a conversation">
+        <a class="tile big t-think" href="chat.html?mode=think"><span class="emoji" aria-hidden="true">🧠</span><span><strong>Help me think</strong><small>Weigh options, spot trade-offs, decide.</small></span></a>
+        <a class="tile big t-idea" href="chat.html?mode=idea"><span class="emoji" aria-hidden="true">💡</span><span><strong>Give me ideas</strong><small>Projects, startups, angles you hadn't tried.</small></span></a>
+        <a class="tile t-study" href="chat.html?mode=study"><span class="emoji" aria-hidden="true">📚</span><span><strong>Help me study</strong><small>Explanations, quizzes, revision.</small></span></a>
+        <a class="tile t-code" href="chat.html?mode=coding"><span class="emoji" aria-hidden="true">💻</span><span><strong>Help me code</strong><small>Debug, learn, build.</small></span></a>
+        <a class="tile t-plan" href="chat.html?mode=mentor"><span class="emoji" aria-hidden="true">🎯</span><span><strong>Help me plan</strong><small>Goals into next steps.</small></span></a>
+        <a class="tile t-fun" href="chat.html?mode=fun"><span class="emoji" aria-hidden="true">😂</span><span><strong>Let's have fun</strong><small>Jokes, riddles, games.</small></span></a>
+        <a class="tile t-friend" href="chat.html?mode=friend" style="--hue: var(--mint)"><span class="emoji" aria-hidden="true">😊</span><span><strong>Just talk</strong><small>No agenda needed.</small></span></a>
+      </nav>
+    </section>
+
+    <section class="about" aria-label="What makes it different">
+      <div><h2>It helps you move, not just answers</h2><p>Your companion works out what you're trying to do, pushes back on weak ideas, and ends with a next step.</p></div>
+      <div><h2>It remembers what matters</h2><p>Goals, preferences and what you're learning carry over between chats. You can see every memory and delete any of them.</p></div>
+      <div><h2>Seven modes, one switch</h2><p>Friend, Mentor, Study, Coding, Idea, Fun and Think. Change mode any time and the whole tone shifts with it.</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">Takto · Built with Flask, SQLite and the Groq API. Your API key never leaves the server.</footer>
+  <script src="js/home.js"></script>
+</body>
+</html>

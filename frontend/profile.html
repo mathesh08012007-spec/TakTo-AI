@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile | Takto</title>
+  <meta name="description" content="Manage your profile and memories.">
+  <link rel="icon" type="image/svg+xml" href="img/takto.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-nav">
+    <a class="brand" href="index.html"><img class="brand-mark" src="img/takto.svg" alt=""><span>Takto</span></a>
+    <nav class="nav-actions" aria-label="Account">
+      <a class="btn btn-primary" href="chat.html">Back to chat</a>
+      <button type="button" class="icon-btn" data-theme-toggle aria-label="Switch theme"></button>
+      <button type="button" class="btn btn-ghost" data-logout>Log out</button>
+    </nav>
+  </header>
+  <main class="page" id="main">
+    <h1>Your profile</h1>
+    <p class="lead">These details shape how your companion talks to you.</p>
+
+    <form id="profile-form" class="panel" novalidate>
+      <h2>About you</h2>
+      <p class="lead">Name, contact and how you like to chat.</p>
+      <div class="grid-2">
+        <div class="field"><label for="name">Name</label><input id="name" name="name" type="text" maxlength="80" required></div>
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
+        <div class="field"><label for="tone">Preferred AI tone</label><select id="tone" name="tone"><option value="auto">Auto (adapts to me)</option><option value="casual">Casual</option><option value="professional">Professional</option><option value="educational">Educational</option><option value="motivational">Motivational</option><option value="technical">Technical</option><option value="fun">Fun</option></select></div>
+        <div class="field"><label for="favorite_mode">Favorite mode</label><select id="favorite_mode" name="favorite_mode"><option value="friend">Friend</option><option value="mentor">Mentor</option><option value="study">Study</option><option value="coding">Coding</option><option value="idea">Idea</option><option value="fun">Fun</option><option value="think">Think</option></select><span class="hint">New chats start in this mode.</span></div>
+      </div>
+      <div class="field"><label for="learning_goals">Learning goals</label><textarea class="input" id="learning_goals" name="learning_goals" maxlength="1000" placeholder="e.g. Learn Python for data science, prepare for placements"></textarea></div>
+      <div class="field"><label for="interests">Interests</label><textarea class="input" id="interests" name="interests" maxlength="1000" placeholder="e.g. AI, football, startups, music"></textarea></div>
+      <p class="form-error" id="form-error" role="alert"></p>
+      <div class="actions"><button class="btn btn-primary" type="submit">Save changes</button></div>
+    </form>
+
+    <section class="panel" aria-labelledby="mem-title">
+      <h2 id="mem-title">What I remember about you</h2>
+      <p class="lead">Only useful, lasting things are saved, never passwords or secrets. You're in control: delete any of them.</p>
+      <ul class="memory-list" id="memory-list"></ul>
+      <p class="empty" id="memory-empty" hidden>Nothing saved yet. As we chat about your goals and preferences, useful details will show up here.</p>
+      <div class="actions"><button type="button" class="btn btn-danger" id="clear-memories" hidden>Clear all memories</button></div>
+    </section>
+  </main>
+  <script src="js/profile.js"></script>
+</body>
+</html>

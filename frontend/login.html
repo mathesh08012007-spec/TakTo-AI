@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in | Takto</title>
+  <meta name="description" content="Sign in to Takto.">
+  <link rel="icon" type="image/svg+xml" href="img/takto.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+  <div class="auth">
+    <aside class="auth-side">
+      <a class="brand" href="index.html"><img class="brand-mark" src="img/takto.svg" alt=""><span>Takto</span></a>
+      <div><img class="auth-mascot" src="img/takto.svg" alt=""><h1 style="margin-top:16px">Good to see you again.</h1><p>Think out loud, learn faster, and build things with a companion that remembers your goals.</p></div>
+    </aside>
+    <main class="auth-main" id="main">
+      <div class="auth-card">
+        <h2>Welcome back</h2>
+        <p class="lead">Pick up where you left off.</p>
+        <form id="auth-form" data-kind="login" novalidate>
+          
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required aria-describedby="pw-hint"></div>
+          
+          <p class="form-error" id="form-error" role="alert"></p>
+          <button class="btn btn-primary btn-block" type="submit">Log in</button>
+        </form>
+        <p class="switch">New here? <a href="register.html">Create an account</a></p>
+      </div>
+    </main>
+  </div>
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+/* Responsive rules. Loaded last so it can override the base styles. */
+.only-mobile { display: none; }
+
+@media (max-width: 960px) {
+  .tile, .tile.big { grid-column: span 3; }
+  .about { grid-template-columns: 1fr; gap: 24px; }
+}
+
+@media (max-width: 860px) {
+  .only-mobile { display: inline-grid; }
+  .layout { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed; z-index: 50; top: 0; bottom: 0; left: 0; width: min(86vw, 320px);
+    transform: translateX(-102%); transition: transform .2s ease; box-shadow: var(--shadow);
+  }
+  body.sidebar-open .sidebar { transform: none; }
+  .conv-actions { opacity: 1; }
+  .msg-actions { opacity: 1; }
+  .auth { grid-template-columns: 1fr; }
+  .auth-side { padding: 24px; gap: 16px; }
+  .auth-side h1 { font-size: 1.8rem; }
+  .auth-side p { display: none; }
+}
+
+@media (max-width: 560px) {
+  .tile, .tile.big { grid-column: span 6; min-height: 120px; flex-direction: row; align-items: center; }
+  .tile.big strong { font-size: 1.4rem; }
+  .grid-2, .fun-grid { grid-template-columns: 1fr; }
+  .topbar .brand span.brand-text { display: none; }
+  .msg-main { max-width: calc(100% - 46px); }
+  .avatar { width: 30px; height: 30px; }
+  .hint-line { display: none; }
+  .site-nav .nav-actions .btn-ghost { display: none; }
+}
+
+@media (max-width: 860px) and (orientation: landscape) and (max-height: 500px) {
+  .welcome { padding-top: 8px; }
+}

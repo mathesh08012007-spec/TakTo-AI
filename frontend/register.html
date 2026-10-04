@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create account | Takto</title>
+  <meta name="description" content="Sign in to Takto.">
+  <link rel="icon" type="image/svg+xml" href="img/takto.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+  <div class="auth">
+    <aside class="auth-side">
+      <a class="brand" href="index.html"><img class="brand-mark" src="img/takto.svg" alt=""><span>Takto</span></a>
+      <div><img class="auth-mascot" src="img/takto.svg" alt=""><h1 style="margin-top:16px">Start talking to someone who gets it.</h1><p>Think out loud, learn faster, and build things with a companion that remembers your goals.</p></div>
+    </aside>
+    <main class="auth-main" id="main">
+      <div class="auth-card">
+        <h2>Create your account</h2>
+        <p class="lead">Takes a minute. No spam.</p>
+        <form id="auth-form" data-kind="register" novalidate>
+          <div class="field"><label for="name">Name</label><input id="name" name="name" type="text" autocomplete="name" maxlength="80" required></div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" required aria-describedby="pw-hint"><span id="pw-hint" class="hint">At least 8 characters.</span></div>
+          <div class="field"><label for="confirm_password">Confirm password</label><input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required></div>
+          <p class="form-error" id="form-error" role="alert"></p>
+          <button class="btn btn-primary btn-block" type="submit">Create account</button>
+        </form>
+        <p class="switch">Already have an account? <a href="login.html">Log in</a></p>
+      </div>
+    </main>
+  </div>
+  <script src="js/auth.js"></script>
+</body>
+</html>
